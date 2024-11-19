@@ -1,0 +1,44 @@
+<html>
+<body>
+<h3>Plugin Booster Installation Readme</h3>
+
+<br/>
+
+<h3>What's inside this folder</h3>
+<ol>
+
+    <li>resources.qrc : file to be compiled when updating the UI. Contains the informations/objects of the UI created in QTCreator
+    <li>resources.py : results of the compilation to be read by QGIS
+    <li>__init__.py : allows the script to be loaded as a plugin by QGIS
+    <li>Booster_dialog_base.ui : contains graphical elements of the window, may be modified with QTCreator
+    <li>Booster_dialog_base.py : Loads the window elements in python
+    <li>booster.py : Main file 
+    <li>icon.png : plugin icon displayed in QGIS
+    <li>qgis_style_files : folder containing style files to be loaded for the manipulated layers in qgis 
+    <li>python_files : Python classed used by this program
+
+</ol>
+
+<h3>How to install</h3>
+<ol>
+    <li>If resources.py is not present in your plugin directory, compile the resources file using pyrcc5 (simply use <b>pb_tool</b> or <b>make</b> if you have automake)
+    <li>Install missing packages
+    <li>Copy the entire directory containing your new plugin to the QGIS plugin directory (see Notes below)
+    <li>Test the plugin by enabling it in the QGIS plugin manager
+    
+</ol>
+Notes:
+<ul>
+    <li>You can use <b>QGIS plugin reloader extension</b> to automatically compile, deploy, and reopen your plugin. 
+</ul>
+</div>
+<div style='font-size:.9em;'>
+<p>
+For information on writing PyQGIS code, see <b>http://loc8.cc/pyqgis_resources</b> for a list of resources.
+</p>
+</div>
+<p>
+&copy;2011-2019 GeoApt LLC - geoapt.com 
+</p>
+</body>
+</html>
