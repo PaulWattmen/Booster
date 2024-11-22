@@ -60,19 +60,19 @@ class MondaySynchronizer:
         self.geojson_dict = {
             "type": "FeatureCollection",
             "features": []
-        }
+        } #init the geojson format
         print("--")
         print("--")
 
         print("creating new dic from scratch")
-        old_date = datetime.datetime.fromtimestamp(1, tz=datetime.timezone.utc)
+        old_date = datetime.datetime.fromtimestamp(1, tz=datetime.timezone.utc) #simulate a very old date to be sure everything is synched
         ids, names = self.get_plot_id_list(old_date, 500)
         self.get_plots_by_id_list(ids)
 
         print(len(self.all_items))
         self.update_geojson_dict()
         self.save_to_file()
-        self.get_monday_parameters()
+        self.get_monday_parameters() #For further use in an edition window
 
     def sync(self):
         """Reads the data from monday and update the local database if new updates are detected"""
@@ -127,7 +127,7 @@ class MondaySynchronizer:
 
         cursor = data['data']['boards'][0]["items_page"]['cursor']
 
-        while cursor:
+        while cursor: #reads the next item page while there is one to read
             query = f"""{{
                    next_items_page(limit: {items_per_page}, cursor: "{cursor}") {{
                        cursor
@@ -371,7 +371,7 @@ class MondaySynchronizer:
     }}
     
     
-    }}""" #ENLEVER ON MIRROR ??
+    }}"""
         response = requests.post(self.apiUrl, json={'query': query}, headers=self.headers)
         try:
             data = response.json()

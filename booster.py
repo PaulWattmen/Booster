@@ -36,7 +36,6 @@ from qgis.core import (
     QgsFeatureRequest,
     QgsWkbTypes,
     QgsJsonUtils,
-    QDialog
 )
 from PyQt5.QtCore import QThread
 from PyQt5.QtCore import QVariant
@@ -96,6 +95,12 @@ class Booster:
         self.synchronizer = None
         self.layer_name = "Parcelles - Monday"
         self.all_plot_layer_name = "Cadastre Parcellaire"
+        self.plu_layer = None
+        self.rpg_layer = None
+        self.protected_layers = {"PROTECTEDAREAS.SIC:sic":None,
+                                 "PROTECTEDAREAS.ZPS:zps":None,
+                                 "PROTECTEDAREAS.ZNIEFF1:znieff1":None,
+                                 "PROTECTEDAREAS.ZNIEFF2:znieff2":None}
         self.get_layer()
         self.selected_plot = None
         self.editionwindow = None
@@ -230,6 +235,9 @@ class Booster:
         self.dlg.edit_pushButton.clicked.connect(self.edit_plot)
         self.dlg.monday_pushButton.clicked.connect(lambda : self.synchronizer.open_in_browser(self.selected_plot["idu"]))
         self.dlg.display_plot_checkBox.clicked.connect(self.load_wfs_layer_with_extent)
+        self.dlg.display_plu_checkBox.clicked.connect(self.toggle_plu_display)
+        self.dlg.display_rpg_checkBox.clicked.connect(self.toggle_rpg_display)
+        self.dlg.display_protected_checkBox.clicked.connect(self.toggle_protected_display)
 
         self.dlg.show()
         # Run the dialog event loop
@@ -277,14 +285,7 @@ class Booster:
             :param data_dict: the dictionary containing attributes and geometry of the layer. Must be GeoJson format.
             :type data_dict:dict
         """
-        layer_list = QgsProject.instance().mapLayersByName(layer_name)
-        if layer_list:
-            layer = layer_list[0]
-        else:
-            layer = None
-        # supprimer layer si déjà ouvert
-        if layer:
-            QgsProject.instance().removeMapLayer(layer)
+        self.delete_already_existing_layer(layer_name)
 
         #convert a dic into Qgis features
         fcString = json.dumps(data_dict)
@@ -435,6 +436,63 @@ class Booster:
         else:
             self.hide_all_plot_window()
 
+    def toggle_plu_display(self):
+        """Toggle the Display of the PLU"""
+        layer_name = "wfs_du:zone_urba"
+        if self.dlg.display_plu_checkBox.isChecked():
+            self.delete_already_existing_layer(layer_name)
+            self.plu_layer = self.create_wfs_layer(layer_name)
+            if self.plu_layer:
+                stylefile_path = os.path.join(Path(__file__).parent, 'qgis_style_files', 'plu_style.qml')
+                self.plu_layer.loadNamedStyle(stylefile_path)
+        else:
+            if self.plu_layer:
+                QgsProject.instance().removeMapLayer(self.plu_layer)
+                self.iface.mapCanvas().refresh()
+
+    def toggle_rpg_display(self):
+        """Toggle the Display of the RPG"""
+        layer_name = "RPG.2023:parcelles_graphiques"
+        if self.dlg.display_rpg_checkBox.isChecked():
+            self.delete_already_existing_layer(layer_name)
+            self.rpg_layer = self.create_wfs_layer(layer_name)
+            if self.rpg_layer:
+                stylefile_path = os.path.join(Path(__file__).parent, 'qgis_style_files', 'rpg_style.qml')
+                self.rpg_layer.loadNamedStyle(stylefile_path)
+        else:
+            if self.rpg_layer:
+                QgsProject.instance().removeMapLayer(self.rpg_layer)
+                self.rpg_layer = None
+                self.iface.mapCanvas().refresh()
+
+    def toggle_protected_display(self):
+        """Toggle the Display of the 4 type of protected areas"""
+        for name in self.protected_layers.keys():
+            if self.dlg.display_protected_checkBox.isChecked():
+                self.delete_already_existing_layer(name)
+                self.protected_layers[name] = self.create_wfs_layer(name)
+
+            else:
+                if self.protected_layers[name]:
+                    QgsProject.instance().removeMapLayer(self.protected_layers[name])
+                    self.protected_layers[name] = None
+                    self.iface.mapCanvas().refresh()
+
+    def create_wfs_layer(self, wfs_layer_name):
+        """load a WFS layer from geoportail using it's reference name
+        :param wfs_layer_name: name of the geoportail layer to import
+        :type wfs_layer_name: str
+        """
+        wfs_url = f"WFS:// pageSize='10000' pagingEnabled='true' preferCoordinatesForWfsT11='false' restrictToRequestBBOX='1' srsname='EPSG:4326' typename='{wfs_layer_name}' url='https://data.geopf.fr/wfs/ows' version='1.1.0'"
+
+        layer = QgsVectorLayer(wfs_url, wfs_layer_name, "WFS")
+        if layer.isValid():
+            QgsProject.instance().addMapLayer(layer)
+            print("WFS layer loaded successfully!")
+            return layer
+        else:
+            print("Failed to load WFS layer.")
+            return None
 
     def hide_all_plot_window(self):
         """Correctly close the window to add plots. Allow to hide the layer showing all the plots at the same time"""
@@ -466,5 +524,13 @@ class Booster:
             :type text: str"""
         a_text = self.dlg.log.toPlainText() + '\n'
         self.dlg.log.setText(a_text+text)
+
+    def delete_already_existing_layer(self,layer_name):
+        """check by layer name if a layer already exists and delete it
+        :param layer_name : string of the layer to delete name"""
+        layer_list = QgsProject.instance().mapLayersByName(layer_name)
+        if layer_list:
+            layer = layer_list[0]
+            QgsProject.instance().removeMapLayer(layer)
 
 
