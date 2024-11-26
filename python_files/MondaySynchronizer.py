@@ -405,8 +405,7 @@ class MondaySynchronizer:
 
     def open_in_google_maps(self,geom):
         geom = json.loads(geom)
-        print(type(geom))
-        print(geom["coordinates"])
+
         y=geom["coordinates"][0][0][0][0]
         x = geom["coordinates"][0][0][0][1]
         url ="https://www.google.com/maps/dir//" + str(x) + "," + str(y)
