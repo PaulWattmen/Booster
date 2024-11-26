@@ -16,8 +16,8 @@ class MondaySynchronizer:
     apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjQzNjA4NjcwNiwiYWFpIjoxMSwidWlkIjo2NTg5MjkyOCwiaWFkIjoiMjAyNC0xMS0xM1QxMjo1NTozNS4wNjVaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTU2NTE0MzMsInJnbiI6ImV1YzEifQ.JOq8JPaRwXaRS5kP0EowpK8Fwv3L2RdcljxpaTkLX8c"
     apiUrl = "https://api.monday.com/v2"
     headers = {"Authorization": apiKey}
-    board_id = 1704649887
-    name_main_group = "nouveau_groupe74816__1"
+    board_id = 1719340424
+    name_main_group = "nouveau_groupe14626__1"
 
     geom_column_infos ={
         "name":"Géométrie"
@@ -33,7 +33,6 @@ class MondaySynchronizer:
         'Brique Techno':{},
         'Protocole':{},
         'Poste Source':{},
-        "Surface":{},
         "Code Postal":{},
         "Propriétaire": {},
 
@@ -69,8 +68,8 @@ class MondaySynchronizer:
         ids, names = self.get_plot_id_list(old_date, 500)
         self.get_plots_by_id_list(ids)
 
-        print(len(self.all_items))
         self.update_geojson_dict()
+
         self.save_to_file()
         self.get_monday_parameters() #For further use in an edition window
 
@@ -91,6 +90,7 @@ class MondaySynchronizer:
         parameters_thread.join()
 
         self.update_geojson_dict()
+        print("items imported : "+str(len(self.geojson_dict["features"])))
         self.save_to_file()
 
     def get_plot_id_list(self,last_sync_date,items_per_page=500):
@@ -165,6 +165,7 @@ class MondaySynchronizer:
                     print(f'{elem["properties"]["idu"]} removed succesfully')
             else:
                 self.geojson_dict["features"].remove(elem)
+                print(f'{elem["properties"]["idu"]} was doubled, the copy was deleted')
 
     def get_plots_by_id_list(self, plot_id_list):
         """get the data from the monday boards plots from the id list given
@@ -215,6 +216,8 @@ class MondaySynchronizer:
                 dropped_amount+=1
                 if("invalid syntax" in inst.args):
                     print(item['name'] + " geom exceed 2000 characters or geom not indicated")
+                else:
+                    print(item['name'] + " unknown import error")
         print(f"{dropped_amount} elems have been dropped in the process")
 
 
@@ -249,7 +252,10 @@ class MondaySynchronizer:
             "settings_str"]
 
         tech_setting_dic = ast.literal_eval(tech_setting_str)
-        self.parameters["techno_list"] = list(tech_setting_dic["labels"].values())
+        labels = []
+        for l in tech_setting_dic["labels"]:
+            labels.append(l["name"])
+        self.parameters["techno_list"] = labels
 
         status_setting_str = \
         response.json()["data"]["boards"][0]["columns"][self.intersting_attributes["Etat"]["position"] + 1][
@@ -394,7 +400,7 @@ class MondaySynchronizer:
 
 
     def open_in_browser(self,idu):
-        url = f"""https://wattmen.monday.com/boards/1704649887?term={idu}&termColumns=XQAAAAIeAAAAAAAAAABBKoIjYcac_KBY4EB0iAHQOZ9yB41kRY_qRcch_98tAAA"""
+        url = f"""https://wattmen.monday.com/boards/1719340424?term={idu}&termColumns=XQAAAAIeAAAAAAAAAABBKoIjYcac_KBY4EB0iAHQOZ9yB41kRY_qRcch_98tAAA"""
         webbrowser.open(url)
 
 

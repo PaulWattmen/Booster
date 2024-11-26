@@ -48,5 +48,6 @@ class EditionWindow():
         if self.plot_infos["Qualité"]:
             self.dlg.qualite.setValue(int(self.plot_infos["Qualité"]))
         self.dlg.etat.setCurrentText(self.plot_infos["Etat"])
-        self.dlg.techno.setCurrentText(self.plot_infos["Brique Techno"])
+        print(self.plot_infos["Brique Techno"])
+        self.dlg.techno.setCurrentText(str(self.plot_infos["Brique Techno"]))
 
