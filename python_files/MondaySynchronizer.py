@@ -403,6 +403,15 @@ class MondaySynchronizer:
         url = f"""https://wattmen.monday.com/boards/1719340424?term={idu}&termColumns=XQAAAAIeAAAAAAAAAABBKoIjYcac_KBY4EB0iAHQOZ9yB41kRY_qRcch_98tAAA"""
         webbrowser.open(url)
 
+    def open_in_google_maps(self,geom):
+        geom = json.loads(geom)
+        print(type(geom))
+        print(geom["coordinates"])
+        y=geom["coordinates"][0][0][0][0]
+        x = geom["coordinates"][0][0][0][1]
+        url ="https://www.google.com/maps/dir//" + str(x) + "," + str(y)
+        webbrowser.open(url)
+
 
 
 

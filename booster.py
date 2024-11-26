@@ -234,6 +234,7 @@ class Booster:
         self.dlg.search_pushButton.clicked.connect(self.search_plot)
         self.dlg.edit_pushButton.clicked.connect(self.edit_plot)
         self.dlg.monday_pushButton.clicked.connect(lambda : self.synchronizer.open_in_browser(self.selected_plot["idu"]))
+        self.dlg.maps_pushButton.clicked.connect(lambda: self.synchronizer.open_in_google_maps(self.selected_plot.geometry().asJson()))
         self.dlg.display_plot_checkBox.clicked.connect(self.load_wfs_layer_with_extent)
         self.dlg.display_plu_checkBox.clicked.connect(self.toggle_plu_display)
         self.dlg.display_rpg_checkBox.clicked.connect(self.toggle_rpg_display)

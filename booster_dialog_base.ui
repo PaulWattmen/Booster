@@ -62,7 +62,7 @@
   <widget class="QPushButton" name="monday_pushButton">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>140</x>
      <y>100</y>
      <width>121</width>
      <height>32</height>
@@ -88,7 +88,7 @@
   <widget class="QPushButton" name="edit_pushButton">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>10</x>
      <y>100</y>
      <width>121</width>
      <height>32</height>
@@ -135,6 +135,19 @@
    </property>
    <property name="text">
     <string>Display Protected Areas</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="maps_pushButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>100</y>
+     <width>121</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Open in Maps</string>
    </property>
   </widget>
  </widget>
