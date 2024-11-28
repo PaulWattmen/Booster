@@ -265,8 +265,15 @@ class Booster:
                 """
         main_window = iface.mainWindow()
         geometry = main_window.geometry().center()
-        x = geometry.x()+main_window.width()/5
-        y=geometry.y()+dy
+        print("Size:", main_window.size())
+        print("Geometry:", main_window.geometry())
+        from PyQt5.QtGui import QGuiApplication
+        screen = QGuiApplication.primaryScreen()
+        print("Primary screen size:", screen.geometry())
+
+        x = main_window.x()+main_window.width()-dialog.width()*1.05
+        y=dy+ geometry.y()-dialog.geometry().center().y()/2
+
         dialog.move(int(x),int(y))
 
     def sync(self):
