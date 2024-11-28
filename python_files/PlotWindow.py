@@ -15,7 +15,7 @@ from qgis.core import (
 
 # Import the code for the dialog
 from .Plot_ViewWindow.plot_dialog import PlotDialog
-
+import json
 
 
 class PlotWindow():
@@ -51,8 +51,11 @@ class PlotWindow():
             self.plot_infos["Code Postal"] = str(self.selected_plot["code_insee"])
             self.plot_infos["Département"] = str(self.selected_plot["code_dep"])
             self.plot_infos["Commune"] = self.selected_plot["nom_com"]
-            self.plot_infos["Géometrie"] = self.selected_plot.geometry().asJson()
+            self.plot_infos["Géometrie"] = json.loads(self.selected_plot.geometry().asJson())
 
+            self.plot_infos["Géometrie"]["coordinates"][0][0] = self.plot_infos["Géometrie"]["coordinates"][0][0][
+                                                           0:70]  # prevent monday to cut over 2000 characters
+            print(len(self.plot_infos["Géometrie"]["coordinates"][0][0]))
             self.writeLog(
             f""" - idu : {self.selected_plot["idu"]}
          - Surface : {self.selected_plot["Contenance"]}

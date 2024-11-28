@@ -26,7 +26,7 @@ class MondaySynchronizer:
 
     intersting_attributes = {
         "Qualité":{},
-        "Chasseur":{},
+        "Responsable":{},
         "Commune":{},
         "Etat": {},
         'Région':{},
@@ -272,6 +272,7 @@ class MondaySynchronizer:
         for attribute in self.intersting_attributes.keys():
             if attribute in plot_infos.keys():
                 column_values[self.intersting_attributes[attribute]["id"]] = plot_infos[attribute]
+
         column_values[self.geom_column_infos["id"]] = str(plot_infos["Géometrie"]).replace('"', "'")
         #print(column_values)
         json_colum_values = json.dumps(column_values).replace('"','\\"').replace('\\'+'\\"','\\"')#.replace('{','\\{').replace('}','\\}').replace('[','\\[').replace(']','\\]')
