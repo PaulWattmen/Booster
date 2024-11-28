@@ -426,7 +426,8 @@ class Booster:
 
             # Send the request to the WFS server
             response = requests.get(url, params=params)
-            # print(response.content)
+            print(response.content)
+            print(params)
 
             self.update_layer(self.all_plot_layer_name,response.json()) #update the all plot layer
 
