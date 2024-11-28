@@ -25,6 +25,7 @@ from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication,QTextCodec
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 from qgis.utils import iface
+from PyQt5.QtCore import Qt
 from qgis.core import (
     QgsProject,
     QgsVectorLayer,
@@ -227,6 +228,8 @@ class Booster:
             self.synchronizer = MondaySynchronizer()
             self.first_start = False
             self.dlg = BoosterDialog()
+            if os.name == "nt": #if running on windows
+                self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
             self.set_side_position_for_dialogs(self.dlg) #Move the window on the side of the screen
 
         # Connect actions to the buttons
@@ -248,7 +251,6 @@ class Booster:
 
         if result:
             iface.edition_window = None
-            print("lol")
             if self.sync_worker:
                 self.sync_worker.wait()
             # Do something useful here - delete the line containing pass and
@@ -426,8 +428,7 @@ class Booster:
 
             # Send the request to the WFS server
             response = requests.get(url, params=params)
-            print(response.content)
-            print(params)
+
 
             self.update_layer(self.all_plot_layer_name,response.json()) #update the all plot layer
 
@@ -541,9 +542,9 @@ class Booster:
 
     def close(self):
         iface.edition_window = None
-        print("lol")
+
         if self.sync_worker:
             self.sync_worker.wait()
-            print("lol2")
+
 
 
