@@ -228,9 +228,7 @@ class Booster:
             self.synchronizer = MondaySynchronizer()
             self.first_start = False
             self.dlg = BoosterDialog()
-            if os.name == "nt": #if running on windows
-                self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
-            self.set_side_position_for_dialogs(self.dlg) #Move the window on the side of the screen
+
 
         # Connect actions to the buttons
             self.dlg.sync_pushButton.clicked.connect(self.sync)
@@ -244,6 +242,9 @@ class Booster:
             self.dlg.display_protected_checkBox.clicked.connect(self.toggle_protected_display)
             self.dlg.rejected.connect(self.close)
 
+        if os.name == "nt":  # if running on windows
+            self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.set_side_position_for_dialogs(self.dlg)  # Move the window on the side of the screen
         self.dlg.show()
         # Run the dialog event loop
         result = self.dlg.exec_()
