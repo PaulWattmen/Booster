@@ -265,7 +265,7 @@ class Booster:
                 """
         main_window = iface.mainWindow()
         geometry = main_window.geometry().center()
-        x = geometry.x()+main_window.width()/3
+        x = geometry.x()+main_window.width()/5
         y=geometry.y()+dy
         dialog.move(int(x),int(y))
 
@@ -352,7 +352,7 @@ class Booster:
             self.editionwindow = EditionWindow(self.synchronizer.parameters, self.selected_plot.attributeMap())
             self.editionwindow.dlg.send.clicked.connect(self.modify_monday_elem)
             self.editionwindow.dlg.delete_button.clicked.connect(self.delete_monday_elem)
-            self.set_side_position_for_dialogs(self.editionwindow.dlg,-20)
+            self.set_side_position_for_dialogs(self.editionwindow.dlg)
             self.editionwindow.dlg.show()
 
     def modify_monday_elem(self):
@@ -433,7 +433,7 @@ class Booster:
             self.update_layer(self.all_plot_layer_name,response.json()) #update the all plot layer
 
             self.plotwindow = PlotWindow(self.all_plot_layer_name)
-            self.set_side_position_for_dialogs(self.plotwindow.dlg,70)
+            self.set_side_position_for_dialogs(self.plotwindow.dlg,10)
             self.plotwindow.dlg.show()
             self.plotwindow.dlg.send.clicked.connect(self.add_plot)
 

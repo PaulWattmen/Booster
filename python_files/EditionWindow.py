@@ -15,7 +15,8 @@ from qgis.core import (
     QgsJsonUtils
 )
 
-
+from PyQt5.QtCore import Qt
+import os
 # Import the code for the dialog
 from .EditingWindow.edition_dialog import EditionDialog
 import os.path
@@ -34,6 +35,8 @@ class EditionWindow():
         self.monday_parameters = monday_parameters
         self.plot_infos = plot_infos
         self.dlg = EditionDialog()
+        if os.name == "nt":  # if running on windows
+            self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.init_combo_box()
         self.fill_fields()
 

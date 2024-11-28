@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-
+from PyQt5.QtCore import Qt
+import os
 from qgis.core import (
     QgsProject,
     QgsVectorLayer,
@@ -24,6 +25,8 @@ class PlotWindow():
     def __init__(self,layer_name):
         """constructor"""
         self.dlg = PlotDialog()
+        if os.name == "nt":  # if running on windows
+            self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.selected_plot = None
         self.plot_infos = {}
         layer_list = QgsProject.instance().mapLayersByName(layer_name)
