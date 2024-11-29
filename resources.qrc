@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/plugins/booster" >
-        <file>icon.png</file>
-    </qresource>
-</RCC>

@@ -1,1 +1,0 @@
-QGIS style files loaded by the program

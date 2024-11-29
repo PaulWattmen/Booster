@@ -1,1 +1,0 @@
-Python classes used by the main python file. The two folders contains the UI informations for the secondary windows.
