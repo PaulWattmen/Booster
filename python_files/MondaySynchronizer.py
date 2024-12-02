@@ -26,7 +26,7 @@ class MondaySynchronizer:
 
     intersting_attributes = {
         "Qualité":{},
-        "Responsable":{},
+        "En charge":{},
         "Commune":{},
         "Etat": {},
         'Région':{},
@@ -186,26 +186,30 @@ class MondaySynchronizer:
 
         for item in self.all_items:
 
-            feature_dic = {
+            feature_dic = { # Initialize the shape of the feature dic
                 "type":"Feature",
                 "properties":{},
                 "geometry":{}
             }
-            feature_dic['properties']['idu'] = item['name']
-            feature_dic['properties']['monday_id'] = item['id']
 
 
-            for attribute in self.intersting_attributes.keys():
+
+            for attribute in self.intersting_attributes.keys(): # find the value of each attribute
 
                 column_id = self.intersting_attributes[attribute]["position"]
-                if "linked_items" in item['column_values'][column_id].keys(): #si l'élément est un connect_board son texte est sotcké dans display value
+                if "linked_items" in item['column_values'][column_id].keys(): #if the element is a connect_board, then its value is stored in linked_items
                     if len(item['column_values'][column_id]['linked_items'])>0:
                         feature_dic['properties'][attribute] = item['column_values'][column_id]['linked_items'][0]["name"]
                     else :
                         feature_dic['properties'][attribute] = "not given"
+                elif "display_value" in item['column_values'][column_id].keys():#if the element is a mirror, then its value is stored in display_value
+                    feature_dic['properties'][attribute] = item['column_values'][column_id]['display_value']
+
                 else:
                     feature_dic['properties'][attribute] = item['column_values'][column_id]['text']
 
+            feature_dic['properties']['idu'] = item['name']
+            feature_dic['properties']['monday_id'] = item['id']
             geom_index = self.geom_column_infos["position"]
             geom_dic_string = item['column_values'][geom_index]['text']
 
@@ -217,7 +221,7 @@ class MondaySynchronizer:
                 if("invalid syntax" in inst.args):
                     print(item['name'] + " geom exceed 2000 characters or geom not indicated")
                 else:
-                    print(item['name'] + " unknown import error")
+                    print(item['name'] + " unknown, was not loaded")
         print(f"{dropped_amount} elems have been dropped in the process")
 
 
@@ -241,6 +245,7 @@ class MondaySynchronizer:
 
             i+=1
 
+
     def get_monday_parameters(self):
         """get the additional labels of the multichoice columns of monday """
         query = f"""{{boards(ids: {self.board_id}) {{
@@ -263,6 +268,7 @@ class MondaySynchronizer:
 
         status_setting_dic = json.loads(status_setting_str)
         self.parameters["status_list"] = list(status_setting_dic["labels"].values())
+
 
     def add_element_to_monday(self, plot_infos):
         """Add an element to the monday board
@@ -373,6 +379,10 @@ class MondaySynchronizer:
                 linked_items{{
                     name
                 }}
+            }}
+            ... on MirrorValue {{
+                display_value
+                id
             }}
         }}
     }}

@@ -29,7 +29,7 @@
   <widget class="QPushButton" name="sync_pushButton">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>130</x>
      <y>20</y>
      <width>100</width>
      <height>32</height>
@@ -148,6 +148,19 @@
    </property>
    <property name="text">
     <string>Open in Maps</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="total_sync_pushButton">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>20</y>
+     <width>151</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Re-Sync everything </string>
    </property>
   </widget>
  </widget>
