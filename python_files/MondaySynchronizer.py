@@ -118,6 +118,7 @@ class MondaySynchronizer:
         response = requests.post(self.apiUrl, json={'query': query}, headers=self.headers)
         data = response.json()
 
+
         for plot in data['data']['boards'][0]["items_page"]['items']:
             all_plot_names.append(plot["name"])
             last_updated = parser.parse(plot["updated_at"])
@@ -255,8 +256,7 @@ class MondaySynchronizer:
         tech_setting_str = \
         response.json()["data"]["boards"][0]["columns"][self.intersting_attributes["Brique Techno"]["position"] + 1][
             "settings_str"]
-
-        tech_setting_dic = ast.literal_eval(tech_setting_str)
+        tech_setting_dic = json.loads(tech_setting_str)
         labels = []
         for l in tech_setting_dic["labels"]:
             labels.append(l["name"])
