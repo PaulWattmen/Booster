@@ -1,7 +1,10 @@
 testfile.py
 stickGeometry.py
 mondayfiller_tool.py
-
+selenium_chrome_session/
+*.png
+*autocad*.txt
+polygon_geometry.txt
 ############# classic files in gitignore ################
 
 # Byte-compiled / optimized / DLL files

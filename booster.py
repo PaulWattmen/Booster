@@ -51,6 +51,7 @@ import time
 from .python_files.MondaySynchronizer import MondaySynchronizer
 from .python_files.PlotWindow import PlotWindow
 from .python_files.EditionWindow import EditionWindow
+from .python_files.ETEXFiller.EtexWindow import EtexWindow
 from .python_files.SyncWorker import SyncWorker
 from urllib.parse import urlencode
 from pathlib import Path
@@ -105,6 +106,7 @@ class Booster:
         self.get_layer()
         self.selected_plot = None
         self.editionwindow = None
+        self.etexwindow = None
         self.sync_worker = None
         # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -226,7 +228,7 @@ class Booster:
         # Create the dialog with elements (after translation) and keep reference
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
         if self.first_start == True:
-            self.synchronizer = MondaySynchronizer()
+            #self.synchronizer = MondaySynchronizer()
             self.first_start = False
             self.dlg = BoosterDialog()
 
@@ -235,6 +237,7 @@ class Booster:
             self.dlg.sync_pushButton.clicked.connect(self.sync)
             self.dlg.search_pushButton.clicked.connect(self.search_plot)
             self.dlg.edit_pushButton.clicked.connect(self.edit_plot)
+            self.dlg.etex_pushButton.clicked.connect(self.launch_etex_prog)
             self.dlg.total_sync_pushButton.clicked.connect(
                 lambda: self.synchronizer.load_all_data_from_monday())
             self.dlg.monday_pushButton.clicked.connect(lambda : self.synchronizer.open_in_browser(self.selected_plot["idu"]))
@@ -278,7 +281,8 @@ class Booster:
 
     def sync(self):
         """Launch the parallel worker that reads the data from Monday"""
-
+        if not self.synchronizer:
+            self.synchronizer = MondaySynchronizer()
         self.writeLog("Synchronisation en cours...")
         self.sync_worker = SyncWorker(self.synchronizer)
         self.sync_worker.finished.connect(self.update_layer_on_thread_finished)
@@ -361,6 +365,12 @@ class Booster:
             self.editionwindow.dlg.delete_button.clicked.connect(self.delete_monday_elem)
             self.set_side_position_for_dialogs(self.editionwindow.dlg)
             self.editionwindow.dlg.show()
+
+    def launch_etex_prog(self):
+        if self.selected_plot:
+            self.etexwindow = EtexWindow(self.selected_plot.attributeMap())
+            self.set_side_position_for_dialogs(self.etexwindow.dlg)
+            self.etexwindow.dlg.show()
 
     def modify_monday_elem(self):
         """Called when a edit is made from the edition window.

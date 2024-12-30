@@ -240,11 +240,14 @@ class MondaySynchronizer:
             if column["title"] in self.intersting_attributes.keys():
                 self.intersting_attributes[column["title"]]["id"] = column["id"]
                 self.intersting_attributes[column["title"]]["position"]=i-1 #do not count the name column
+
             elif column["title"] == self.geom_column_infos["name"]:
                 self.geom_column_infos["id"] = column["id"]
                 self.geom_column_infos["position"] = i - 1  # do not count the name column
 
+
             i+=1
+
 
 
     def get_monday_parameters(self):

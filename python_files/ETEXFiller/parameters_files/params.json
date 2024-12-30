@@ -1,0 +1,200 @@
+{
+    "list": [
+        {
+            "name": "Etes-vous une societe francaise ? - Oui",
+            "id": "mat-radio-4",
+            "class": "",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "SIREN",
+            "id": "mat-input-0",
+            "class": "",
+            "action": "write",
+            "value": "853465193"
+        },
+        {
+            "name": "Nom de la societe",
+            "id": "mat-input-1",
+            "class": "",
+            "action": "write",
+            "value": "Wattmen"
+        },
+        {
+            "name": "Votre contact est de type : Personne Physique",
+            "id": "mat-radio-7",
+            "class": "",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "Nom de l'interlocuteur a contacter'",
+            "id": "mat-input-2",
+            "class": "",
+            "action": "write",
+            "value": "Mesguen"
+        },
+        {
+            "name": "Prenom de l’interlocuteur a contacter ",
+            "id": "mat-input-3",
+            "class": "",
+            "action": "write",
+            "value": "Cyrille"
+        },
+        {
+            "name": "Fonction de l’interlocuteur a contacter ",
+            "id": "mat-input-4",
+            "class": "",
+            "action": "write",
+            "value": "Directeur Technique"
+        },
+        {
+            "name": "Telephone de contact",
+            "id": "mat-input-5",
+            "class": "",
+            "action": "write",
+            "value": "0000000000"
+        },
+        {
+            "name": "Adresse mail de contact",
+            "id": "mat-input-6",
+            "class": "",
+            "action": "write",
+            "value": "salut@ccool.com"
+        },
+        {
+            "name": "Mandataire ? Non",
+            "id": "mat-radio-9",
+            "class": "",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "Suivant",
+            "id": "",
+            "class": "ctx__button.ctx__primary-button.display_flex_row",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "Nouveau Racco",
+            "id": "mat-radio-11",
+            "class": "",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "Stockage seulement",
+            "id": "mat-radio-15",
+            "class": "",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "Racco optimisé - oui",
+            "id": "mat-radio-21",
+            "class": "",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "GMP - non",
+            "id": "mat-radio-24",
+            "class": "",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "Suivant - page 2",
+            "id": "",
+            "class": "ctx__button.ctx__primary-button.display_flex_row",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "[nom projet] Nom projet",
+            "id": "mat-input-7",
+            "class": "mat-input-element.mat-form-field-autofill-control.ng-tns-c49-18.ng-untouched.ng-pristine.ng-invalid.cdk-text-field-autofill-monitored",
+            "action": "write_from_data",
+            "value": ""
+        },
+        {
+            "name": "[INSEE] Code INSEE de l installation",
+            "id": "mat-input-8",
+            "class": "mat-input-element.mat-form-field-autofill-control.ng-tns-c49-19.ng-untouched.ng-pristine.ng-invalid.cdk-text-field-autofill-monitored",
+            "action": "write_from_data",
+            "value": ""
+        },
+        {
+            "name": "[commune] Nom de la commune",
+            "id": "mat-input-9",
+            "class": "mat-input-element.mat-form-field-autofill-control.ng-tns-c49-20.ng-untouched.ng-pristine.ng-invalid.cdk-text-field-autofill-monitored",
+            "action": "write_from_data",
+            "value": ""
+        },
+        {
+            "name": "[latitude] latitude",
+            "id": "mat-input-10",
+            "class": "",
+            "action": "write_from_data",
+            "value": ""
+        },
+        {
+            "name": "[longitude] longitude",
+            "id": "mat-input-11",
+            "class": "",
+            "action": "write_from_data",
+            "value": ""
+        },
+        {
+            "name": "date de racco",
+            "id": "mat-input-12",
+            "class": "",
+            "action": "calendar",
+            "value": ""
+        },
+        {
+            "name": "Suivant - page 3",
+            "id": "",
+            "class": "ctx__button.ctx__primary-button.display_flex_row",
+            "action": "click",
+            "value": ""
+        },
+        {
+            "name": "Puissance installee",
+            "id": "mat-input-13",
+            "class": "",
+            "action": "write",
+            "value": "50"
+        },
+        {
+            "name": "Puissance injection",
+            "id": "mat-input-14",
+            "class": "",
+            "action": "write",
+            "value": "50"
+        },
+        {
+            "name": "Puissance soutirage",
+            "id": "mat-input-15",
+            "class": "",
+            "action": "write",
+            "value": "50"
+        },
+        {
+            "name": "Constitution de l'installation",
+            "id": "mat-input-16",
+            "class": "",
+            "action": "write",
+            "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent iaculis mi at ipsum pulvinar maximus. Vestibulum lacus lectus, porttitor vitae consequat lacinia, ullamcorper eget arcu. Cras id felis ut nisl hendrerit suscipit nec eu nisl. Vestibulum imperdiet, diam quis lacinia auctor, nibh nisl rhoncus lectus, vel fringilla justo leo at urna."
+        },
+        {
+            "name": "Elements complementaires",
+            "id": "mat-input-17",
+            "class": "",
+            "action": "write",
+            "value": "Suspendisse potenti. Maecenas eu tincidunt nisi, in pulvinar tellus. Nulla mollis ultrices nibh at euismod. Donec nibh libero, aliquet eu ipsum a, placerat euismod risus. Vivamus a risus augue. Quisque tortor justo, imperdiet condimentum blandit consectetur, dictum vitae tortor."
+        }
+    ]
+}
