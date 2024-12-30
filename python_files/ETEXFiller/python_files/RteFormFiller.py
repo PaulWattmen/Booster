@@ -1,6 +1,15 @@
 import json
-from seleniumwire import webdriver
-from selenium.webdriver.common.by import By
+try:
+    from seleniumwire import webdriver
+    from selenium.webdriver.common.by import By
+except:
+    import pip
+    pip.main(['install', 'selenium-wire'])
+    pip.main(['install', 'blinker==1.7.0'])
+    from seleniumwire import webdriver
+    from selenium.webdriver.common.by import By
+
+
 import time
 import os
 
