@@ -46,12 +46,14 @@ class MondaySynchronizer:
         self.get_column_position_by_attribute()
         self.geojson_dict = {}
         self.parameters = {}
+        parameters_thread = Thread(target=self.get_monday_parameters)  # Parralel launch to earn some time
+        parameters_thread.start()
+
 
         if os.path.isfile(os.path.join(self.relative_path,self.save_json_file_name)):
             self.load_from_file()
-            self.sync()
-        else:
-            self.load_all_data_from_monday()
+
+
 
     def load_all_data_from_monday(self):
         """Reads all the data from the Monday database and store it in a local file"""
@@ -76,6 +78,9 @@ class MondaySynchronizer:
     def sync(self):
         """Reads the data from monday and update the local database if new updates are detected"""
 
+        if not os.path.isfile(os.path.join(self.relative_path, self.save_json_file_name)):
+            self.load_all_data_from_monday() #If all data have to be retrieved
+            return ''
         last_sync_date = datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(self.relative_path,self.save_json_file_name)),tz=datetime.timezone.utc)
 
         ids, allnames = self.get_plot_id_list(last_sync_date)

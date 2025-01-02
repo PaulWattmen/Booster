@@ -2,6 +2,7 @@
 
 from PyQt5.QtCore import Qt
 import os
+import math
 from qgis.core import (
     QgsProject,
     QgsVectorLayer,
@@ -46,6 +47,18 @@ class PlotWindow():
             self.selected_plot = selected_features[0]
             self.get_attributes()
 
+    def shorten_geometry(self,coordinates_list, wanted_length):
+        i = 0
+        shortened_list = []
+        mod = math.floor(len(coordinates_list)/wanted_length) +1
+        print(f'mod : {mod}')
+        for coords in coordinates_list:
+            if i%mod ==0:
+                shortened_list.append(coords)
+            i+=1
+        return shortened_list
+
+
     def get_attributes(self):
         """display the selected plots attributes in the log widget"""
         if self.selected_plot:
@@ -55,10 +68,12 @@ class PlotWindow():
             self.plot_infos["Département"] = str(self.selected_plot["code_dep"])
             self.plot_infos["Commune"] = self.selected_plot["nom_com"]
             self.plot_infos["Géometrie"] = json.loads(self.selected_plot.geometry().asJson())
+            wanted_length = 60
+            print("longueur avant traitement : " + str(len(self.plot_infos["Géometrie"]["coordinates"][0][0])))
+            if len(self.plot_infos["Géometrie"]["coordinates"][0][0])>wanted_length:
+                self.plot_infos["Géometrie"]["coordinates"][0][0] = self.shorten_geometry(self.plot_infos["Géometrie"]["coordinates"][0][0], wanted_length)
+                print("longueur après traitement : " +str(len(self.plot_infos["Géometrie"]["coordinates"][0][0])))
 
-            self.plot_infos["Géometrie"]["coordinates"][0][0] = self.plot_infos["Géometrie"]["coordinates"][0][0][
-                                                           0:70]  # prevent monday to cut over 2000 characters
-            print(len(self.plot_infos["Géometrie"]["coordinates"][0][0]))
             self.writeLog(
             f""" - idu : {self.selected_plot["idu"]}
          - Surface : {self.selected_plot["Contenance"]}

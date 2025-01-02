@@ -1,6 +1,7 @@
 from .python_files.Plot import Plot
 from .python_files.RteFormFiller import RteFormFiller
 from .python_files.AerialViewer import AerialViewer
+from .python_files.GeofoncierScreener import GeofoncierScreener
 import time
 import os
 from PyQt5.QtCore import Qt
@@ -55,7 +56,10 @@ class EtexWindow():
 
         viewer.save_meters_geometry_to_file(os.path.join(main_dir_path, 'parameters_files/polygon_geometry.txt'))
 
-        self.writeLog("Fichiers et images pour autocad créées avec succès !")
+        GeofoncierScreener().get_pic(os.path.join(main_dir_path, 'pictures/cadastre.png'),plot.attributes["idu"])
+
+
+        self.appendLog("Fichiers et images pour autocad créées avec succès !")
 
     def fill_RTE_form(self):
 
@@ -75,12 +79,13 @@ class EtexWindow():
         time.sleep(0.5)
         formfiller.fill_form(plot.attributes)
 
-        self.writeLog("Formulaire complété avec succès !")
+        self.appendLog("Formulaire complété avec succès !")
 
     def get_all_attributes(self):
         plot = Plot(self.plot_infos['idu'])
         plot.get_plot_data_from_monday()
         plot.get_attributes_from_pappers()
+        self.writeLog(plot.attributes["geofoncier_link"])
         return plot
 
 

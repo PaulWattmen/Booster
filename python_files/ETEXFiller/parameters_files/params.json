@@ -47,21 +47,21 @@
             "id": "mat-input-4",
             "class": "",
             "action": "write",
-            "value": "Directeur Technique"
+            "value": "CDO"
         },
         {
             "name": "Telephone de contact",
             "id": "mat-input-5",
             "class": "",
             "action": "write",
-            "value": "0000000000"
+            "value": "0770216862"
         },
         {
             "name": "Adresse mail de contact",
             "id": "mat-input-6",
             "class": "",
             "action": "write",
-            "value": "salut@ccool.com"
+            "value": "cyrille.mesguen@wattmen.org"
         },
         {
             "name": "Mandataire ? Non",
@@ -187,14 +187,14 @@
             "id": "mat-input-16",
             "class": "",
             "action": "write",
-            "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent iaculis mi at ipsum pulvinar maximus. Vestibulum lacus lectus, porttitor vitae consequat lacinia, ullamcorper eget arcu. Cras id felis ut nisl hendrerit suscipit nec eu nisl. Vestibulum imperdiet, diam quis lacinia auctor, nibh nisl rhoncus lectus, vel fringilla justo leo at urna."
+            "value": "20 unités de stockage de batteries de 2.5MW, 10 postes de transformation BT / HTA en 33kV / 0,69 kV, 1 poste électrique avec un transformateur 225kV / 33kV."
         },
         {
             "name": "Elements complementaires",
             "id": "mat-input-17",
             "class": "",
             "action": "write",
-            "value": "Suspendisse potenti. Maecenas eu tincidunt nisi, in pulvinar tellus. Nulla mollis ultrices nibh at euismod. Donec nibh libero, aliquet eu ipsum a, placerat euismod risus. Vivamus a risus augue. Quisque tortor justo, imperdiet condimentum blandit consectetur, dictum vitae tortor."
+            "value": "Le raccordement est prévu sur la parcelle à 300 ml au poste source. Il est préférable de circuler en sous terrain sur la rue. Ne pas hésiter à indiquer la puissance maximale potentielle possible en raccordement, la surface du terrain étant suffisamment importante pour étendre la ferme de stockage."
         }
     ]
 }

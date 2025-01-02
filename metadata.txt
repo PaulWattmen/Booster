@@ -6,7 +6,7 @@
 name=Booster
 qgisMinimumVersion=3.0
 description=This plugin allows to sync the monday database with the qgis data visualization
-version=1.0
+version=1.1
 author=Paul Poissonnet - Wattmen
 email=paul.poissonnet@wattmen.org
 

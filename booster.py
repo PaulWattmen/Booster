@@ -57,7 +57,7 @@ from urllib.parse import urlencode
 from pathlib import Path
 
 import requests
-from threading import Thread
+import datetime
 
 
 class Booster:
@@ -228,9 +228,13 @@ class Booster:
         # Create the dialog with elements (after translation) and keep reference
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
         if self.first_start == True:
-            #self.synchronizer = MondaySynchronizer()
+            self.synchronizer = MondaySynchronizer()
             self.first_start = False
             self.dlg = BoosterDialog()
+
+            self.writeLog("Synchronisez pour obtenir les dernières modifications !")
+            if os.path.isfile(os.path.join(self.synchronizer.relative_path, self.synchronizer.save_json_file_name)):
+                self.appendLog(f'Dernière MàJ : {datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(self.synchronizer.relative_path, self.synchronizer.save_json_file_name)),tz=datetime.timezone(datetime.timedelta(hours=1)))}')
 
 
         # Connect actions to the buttons
@@ -293,6 +297,9 @@ class Booster:
 
         self.update_layer(self.layer_name, self.synchronizer.geojson_dict)
         self.writeLog("Synchronisation finie !")
+        self.appendLog(
+            f'Dernière MàJ : {datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(self.synchronizer.relative_path, self.synchronizer.save_json_file_name)), tz=datetime.timezone(datetime.timedelta(hours=1)))}')
+
         self.worker = None
 
 
@@ -383,6 +390,7 @@ class Booster:
         self.editionwindow.dlg.done(0)
         self.synchronizer.modify_element_to_monday(plot_infos)
         self.update_layer(self.layer_name, self.synchronizer.geojson_dict)
+        self.sync()
 
     def delete_monday_elem(self):
         """Called when the delete button is pressed from the edition window.
@@ -532,6 +540,7 @@ class Booster:
             self.iface.mapCanvas().refresh()
 
     def add_plot(self):
+
         self.synchronizer.add_element_to_monday(self.plotwindow.plot_infos)
         self.sync()
 
